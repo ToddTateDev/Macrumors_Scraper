@@ -22,7 +22,19 @@ app.use(express.static("public"));
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/macrumorsdb", { useNewUrlParser: true });
 
+
+
+app.get("/scrape", function(req, res) {
+    axios.get("http://www.macrumors.com").then(function(response) {
+        var $ = cheerio.load(response.data);
+
+        $("")
+    })
+})
 //ROUTES
+
+
+
 
 // Start the server
 app.listen(PORT, function() {
