@@ -27,32 +27,37 @@ app.set("view engine", "handlebars");
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/macrumorsdb", { useNewUrlParser: true });
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     res.render("home");
 })
 
-app.get("/scrape", function(req, res) {
-    axios.get("http://www.macrumors.com").then(function(response) {
+app.get("/scrape", function (req, res) {
+    axios.get("http://www.macrumors.com").then(function (response) {
         var $ = cheerio.load(response.data);
 
-        $("div.article").each(function(i, element) {
+        $("div.article").each(function (i, element) {
 
             var title = $(element).find("h2.title").text();
             var urlLink = $(element).find("h2.title").find("a").attr("href");
             var article = $(element).find("div.content_inner").text();
 
-        db.Article.create({ "title": title, "link": urlLink, "body": article})
+            db.Article.create({ "title": title, "link": urlLink, "body": article })
+            res.render("home", )
+        })
+        
     })
-})
-//ROUTES
+    
+    //ROUTES
 })
 
+app.
+    
 
 
 // Start the server
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");
-  });
+});
 
 
 
